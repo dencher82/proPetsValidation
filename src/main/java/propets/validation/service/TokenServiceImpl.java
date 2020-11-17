@@ -50,7 +50,10 @@ public class TokenServiceImpl implements TokenService {
 				throw new TokenExpiredException();
 			}
 			claims.put("timestamp", Instant.now().plus(TOKEN_PERIOD_DAYS, ChronoUnit.DAYS).toEpochMilli());
-			String newToken = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, secretKey).compact();
+			String newToken = Jwts.builder()
+					.setClaims(claims)
+					.signWith(SignatureAlgorithm.HS256, secretKey)
+					.compact();
 			return createResponseEntity(newToken, claims.get("login").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,7 +92,7 @@ public class TokenServiceImpl implements TokenService {
 		return false;
 	}
 
-	public String[] decodeBase24token(String base64token) {
+	private String[] decodeBase24token(String base64token) {
 		String[] credentials = base64token.split(" ");
 		String credential = new String(Base64.getDecoder().decode(credentials[1]));
 		return credential.split(":");
