@@ -50,10 +50,7 @@ public class TokenServiceImpl implements TokenService {
 				throw new TokenExpiredException();
 			}
 			claims.put("timestamp", Instant.now().plus(TOKEN_PERIOD_DAYS, ChronoUnit.DAYS).toEpochMilli());
-			String newToken = Jwts.builder()
-					.setClaims(claims)
-					.signWith(SignatureAlgorithm.HS256, secretKey)
-					.compact();
+			String newToken = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, secretKey).compact();
 			return createResponseEntity(newToken, claims.get("login").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,13 +63,10 @@ public class TokenServiceImpl implements TokenService {
 		try {
 			String[] credentials = decodeBase24token(base64token);
 			if (validateUser(credentials)) {
-				String token = Jwts.builder()
-						.claim("login", credentials[0])
-						.claim("password", credentials[1])
+				String token = Jwts.builder().claim("login", credentials[0]).claim("password", credentials[1])
 						.claim("timestamp", Instant.now().plus(TOKEN_PERIOD_DAYS, ChronoUnit.DAYS).toEpochMilli())
-						.signWith(SignatureAlgorithm.HS256, secretKey)
-						.compact();
-				return createResponseEntity(token, credentials[0]);
+						.signWith(SignatureAlgorithm.HS256, secretKey).compact();
+				return createResponseEntity(token);
 			} else {
 				throw new TokenValidateException();
 			}
@@ -86,7 +80,7 @@ public class TokenServiceImpl implements TokenService {
 		Account account = accountingRepository.findById(credentials[0]).orElse(null);
 		if (account != null) {
 			if (BCrypt.checkpw(credentials[1], account.getPassword())) {
-				return true; 
+				return true;
 			}
 		}
 		return false;
@@ -102,6 +96,12 @@ public class TokenServiceImpl implements TokenService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(TOKEN_HEADER, token);
 		return new ResponseEntity<String>(login, headers, HttpStatus.OK);
+	}
+
+	private ResponseEntity<String> createResponseEntity(String token) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(TOKEN_HEADER, token);
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
 	}
 
 	@Bean
