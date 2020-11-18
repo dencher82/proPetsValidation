@@ -18,7 +18,7 @@ import static propets.validation.configuration.Constants.*;
 import propets.validation.service.TokenService;
 
 @Service
-public class tokenValidationFilter implements Filter {
+public class TokenValidationFilter implements Filter {
 
 	@Autowired
 	TokenService tokenService;
