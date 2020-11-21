@@ -1,7 +1,6 @@
 package propets.validation.service;
 
-import static propets.validation.configuration.Constants.TOKEN_HEADER;
-import static propets.validation.configuration.Constants.TOKEN_PERIOD_DAYS;
+import static propets.validation.configuration.Constants.*;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -95,7 +94,8 @@ public class TokenServiceImpl implements TokenService {
 	private ResponseEntity<String> createResponseEntity(String token, String login) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(TOKEN_HEADER, token);
-		return new ResponseEntity<String>(login, headers, HttpStatus.OK);
+		headers.add(LOGIN_HEADER, token);
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
 	}
 
 	private ResponseEntity<String> createResponseEntity(String token) {
