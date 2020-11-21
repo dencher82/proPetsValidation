@@ -1,7 +1,9 @@
 package propets.validation.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,8 +33,8 @@ public class Account implements Serializable{
 	String avatar;
 	String phone;
 	Set<String> roles = new HashSet<>();
-	Set<String> favorites = new HashSet<>();
-	Set<String> activities = new HashSet<>();
+	Map<String, Set<String>> favourites = new HashMap<>();
+	Map<String, Set<String>> activities = new HashMap<>();
 	boolean flBlocked;
 	long timeUnblock;
 	
