@@ -94,7 +94,7 @@ public class TokenServiceImpl implements TokenService {
 	private ResponseEntity<String> createResponseEntity(String token, String login) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(TOKEN_HEADER, token);
-		headers.add(LOGIN_HEADER, token);
+		headers.add(LOGIN_HEADER, login);
 		return new ResponseEntity<String>(headers, HttpStatus.OK);
 	}
 
