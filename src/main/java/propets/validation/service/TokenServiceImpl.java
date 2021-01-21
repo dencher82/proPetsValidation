@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,11 @@ import propets.validation.exceptions.TokenExpiredException;
 import propets.validation.exceptions.TokenValidateException;
 import propets.validation.model.Account;
 
+@RefreshScope
 @Service
 public class TokenServiceImpl implements TokenService {
 
-	@Value("$")
+	@Value("${secret.value}")
 	private String secret;
 
 	@Autowired

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,9 +21,6 @@ public class Account implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -1755964199555731373L;
-
-	@Value("${block.period}")
-	int blockPeriod;
 	
 	@Id
 	String email;

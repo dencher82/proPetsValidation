@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@RefreshScope
 @Component
 @Order(0)
 public class CORSFilter implements Filter {
