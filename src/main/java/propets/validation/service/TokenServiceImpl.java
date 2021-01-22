@@ -7,13 +7,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +27,7 @@ import propets.validation.model.Account;
 @RefreshScope
 @Service
 public class TokenServiceImpl implements TokenService {
-
-	@Value("${secret.value}")
-	private String secret;
-
+	
 	@Autowired
 	private SecretKey secretKey;
 
@@ -106,9 +99,6 @@ public class TokenServiceImpl implements TokenService {
 		return new ResponseEntity<String>(headers, HttpStatus.OK);
 	}
 
-	@Bean
-	public SecretKey secretKey() {
-		return new SecretKeySpec(Base64.getUrlEncoder().encode(secret.getBytes()), "AES");
-	}
+	
 
 }

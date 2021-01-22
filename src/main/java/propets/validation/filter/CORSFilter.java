@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(0)
 public class CORSFilter implements Filter {
-
+	
 	@Value("${origin.url}")
 	private String originUrl;
 	
