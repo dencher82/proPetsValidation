@@ -57,9 +57,12 @@ public class TokenServiceImpl implements TokenService {
 		try {
 			String[] credentials = decodeBase24token(base64token);
 			if (validateUser(credentials)) {
-				String token = Jwts.builder().claim("login", credentials[0]).claim("password", credentials[1])
+				String token = Jwts.builder()
+						.claim("login", credentials[0])
+						.claim("password", credentials[1])
 						.claim("timestamp", Instant.now().plus(TOKEN_PERIOD_DAYS, ChronoUnit.DAYS).toEpochMilli())
-						.signWith(SignatureAlgorithm.HS256, secretKey).compact();
+						.signWith(SignatureAlgorithm.HS256, secretKey)
+						.compact();
 				return createResponseEntity(token);
 			} else {
 				throw new TokenValidateException();
